@@ -39,9 +39,13 @@ public class Bird : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         score++;
-        if ((score % 3) == 0) {
+        increaseSpeedOnHigherScore();
+        audioScore.Play();
+    }
+
+    private void increaseSpeedOnHigherScore() {
+        if ((score % 4) == 0) {
             speed = speed * 1.2f;
         }
-        audioScore.Play();
     }
 }
