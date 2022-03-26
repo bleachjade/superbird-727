@@ -8,12 +8,14 @@ using UnityEngine.Events;
 public class SuperBirdManager : MonoBehaviour
 {
     public Bird bird;
+    public Bird bird2;
     public TMP_Text textScore;
     public TMP_Text textSumScore;
     public TMP_Text textHighScore;
 
     public GameObject summaryPanel;
     bool birdPreviousState = false;
+    bool birdPreviousState2 = false;
     int high_score = 0;
 
     public UnityEvent onGameFinished;
@@ -23,6 +25,7 @@ public class SuperBirdManager : MonoBehaviour
     void Start()
     {
         birdPreviousState = bird.isDead;
+        birdPreviousState2 = bird2.isDead;
         summaryPanel.SetActive(false);
         high_score = LoadScoreFromDisk();
         textHighScore.text = high_score.ToString();
@@ -31,17 +34,31 @@ public class SuperBirdManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        textScore.text = bird.score.ToString();
+        if(bird.score >= bird2.score){
+           textScore.text = bird.score.ToString(); 
+        }
+        if(bird2.score >= bird.score){
+           textScore.text = bird2.score.ToString();     
+        }
 
-        if (birdPreviousState != bird.isDead) {
+        if ((birdPreviousState != bird.isDead) || (birdPreviousState2 != bird2.isDead)) {
             OnBirdDead();
             birdPreviousState = bird.isDead;
+            birdPreviousState2 = bird2.isDead;
             onGameFinished.Invoke();
         }
+
+        // if(bird.isDead){
+        //     OnBirdDead();
+        //     birdPreviousState = bird.isDead;
+        //     birdPreviousState2 = bird2.isDead;
+        //     onGameFinished.Invoke();
+        // }
     }
 
     void OnBirdDead() {
-        summaryPanel.SetActive(bird.isDead);
+        summaryPanel.SetActive(true);
+        //summaryPanel.SetActive(bird2.isDead);
         textSumScore.text = bird.score.ToString();
 
         if (bird.score > high_score) { // New highscore
@@ -50,6 +67,14 @@ public class SuperBirdManager : MonoBehaviour
             textHighScore.text = bird.score.ToString();
         }
     }
+
+
+
+
+
+
+
+
 
     public void TryAgain() {
         SceneManager.LoadScene("SuperBird");
