@@ -7,6 +7,7 @@ public class Bird : MonoBehaviour
     public Rigidbody rb;
     public float jumpPower = 400f;
     public float speed = 1f;
+    public int mouse = 0;
     public bool isDead = false;
     public int score = 0;
     public AudioSource audioJump;
@@ -25,7 +26,7 @@ public class Bird : MonoBehaviour
         if (!isDead) {
             transform.Translate(Vector3.right * speed * Time.deltaTime);
             // Left click
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(mouse)) {
                 rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
                 audioJump.Play();
             }

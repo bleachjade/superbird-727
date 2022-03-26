@@ -8,6 +8,7 @@ public class PipeFactory : MonoBehaviour
     public float nextPipeX = 12f;
     public GameObject origin;
     public GameObject bird;
+    public GameObject bird2;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +18,7 @@ public class PipeFactory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bird.transform.position.x + cap*3 > nextPipeX) {
+        if ((bird.transform.position.x + cap*3 > nextPipeX) || (bird2.transform.position.x + cap*3 > nextPipeX)){
             GameObject clone = Instantiate(origin);
             clone.transform.position = new Vector3(nextPipeX, Random.Range(1f, -3.5f), 0);
             nextPipeX += cap;
